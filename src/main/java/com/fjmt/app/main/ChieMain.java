@@ -21,9 +21,9 @@ public class ChieMain {
 	private static List<QABean> qaBeanList = new ArrayList<>();
 
 	public static void main(String[] args) throws IOException {
-		parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2079048294/list/solved",
-				"/home/dev10635gce001/tensorflow/chat-master/datas/question_neko.txt",
-				"/home/dev10635gce001/tensorflow/chat-master/datas/answer_neko.txt");
+		parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2078297658/list/solved",
+				"/home/dev10635gce002/tensorflow/chat-master/datas/question_neko.txt",
+				"/home/dev10635gce002/tensorflow/chat-master/datas/answer_neko.txt");
 		//parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2079048294/list/solved",
 		//		"/home/dev10635gce001/tensorflow/chat-master/datas/question_neko.txt",
 		//		"/home/dev10635gce001/tensorflow/chat-master/datas/answer_neko.txt");
