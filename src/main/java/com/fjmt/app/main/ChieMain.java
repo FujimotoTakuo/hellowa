@@ -21,25 +21,29 @@ public class ChieMain {
 	private static List<QABean> qaBeanList = new ArrayList<>();
 
 	public static void main(String[] args) throws IOException {
-		parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2078297658/list/solved",
-				"/home/wonusp/tensorflow/chat-master/datas/question_java.txt",
-				"/home/wonusp/tensorflow/chat-master/datas/answer_java.txt");
+		parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2079048294/list/solved",
+				"/home/dev10635gce001/tensorflow/chat-master/datas/question_neko.txt",
+				"/home/dev10635gce001/tensorflow/chat-master/datas/answer_neko.txt");
 		//parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2079048294/list/solved",
-		//		"/home/wonusp/tensorflow/chat-master/datas/question_neko.txt",
-		//		"/home/wonusp/tensorflow/chat-master/datas/answer_neko.txt");
+		//		"/home/dev10635gce001/tensorflow/chat-master/datas/question_neko.txt",
+		//		"/home/dev10635gce001/tensorflow/chat-master/datas/answer_neko.txt");
 		// String topPageUrl =
 		// "http://chiebukuro.yahoo.co.jp/dir/list.php?did=2079048294&flg=1&sort=16&type=list&page=31";
 
 	}
 
 	private static void parseDocument(String topPageUrl, String inFileName, String outFileName) throws IOException {
+		File qFile = null;
+		BufferedWriter bw1 = null;
+		File aFile = null;
+		BufferedWriter bw2 = null;
 		try {
+			qFile = new File(inFileName);
+			bw1 = new BufferedWriter(new FileWriter(qFile));
+			aFile = new File(outFileName);
+			bw2 = new BufferedWriter(new FileWriter(aFile));
 			searchQuestion(topPageUrl);
 		} finally {
-			File qFile = new File(inFileName);
-			BufferedWriter bw1 = new BufferedWriter(new FileWriter(qFile));
-			File aFile = new File(outFileName);
-			BufferedWriter bw2 = new BufferedWriter(new FileWriter(aFile));
 			// 結果確認用
 			for (QABean bean : qaBeanList) {
 				bw1.write(bean.getQuestion());
@@ -85,7 +89,7 @@ public class ChieMain {
 			// System.out.println();
 		}
 
-		if (100 < Integer.parseInt(currentPage)) {
+		if (120 < Integer.parseInt(currentPage)) {
 			return;
 		}
 		System.out.println();
