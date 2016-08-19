@@ -23,7 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.fjmt.app.main.*
+import com.fjmt.app.main.*;
 
 // [START example]
 @WebServlet(name = "helloworld", value = "")
@@ -35,7 +35,7 @@ public class HelloServlet extends HttpServlet {
     PrintWriter out = resp.getWriter();
     out.println("Hello, world");
     try {
-      ChieMain.main();
+      ChieMain.main(new String[]{});
     } catch (Exception e) {
       e.printStackTrace();
     }
