@@ -21,11 +21,11 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 //		Document doc = JSoupUtil.getDocument("http://yozora.kazumi386.org/9/1/ndck913.html");
 		parseDocument(JSoupUtil.getDocument("http://yozora.kazumi386.org/9/1/ndck913.html"),
-				"/home/wonusp/tensorflow/chat-master/datas/first.txt",
-				"/home/wonusp/tensorflow/chat-master/datas/second.txt");
-		parseDocument(JSoupUtil.getDocument("http://yozora.kazumi386.org/9/1/ndc913.html"),
-				"/home/wonusp/tensorflow/chat-master/datas/first_all.txt",
-				"/home/wonusp/tensorflow/chat-master/datas/second_all.txt");
+				"~/tensorflow/chat-master/datas/first.txt",
+				"~/tensorflow/chat-master/datas/second.txt");
+		//parseDocument(JSoupUtil.getDocument("http://yozora.kazumi386.org/9/1/ndc913.html"),
+		//		"~/tensorflow/chat-master/datas/first_all.txt",
+		//		"~/tensorflow/chat-master/datas/second_all.txt");
 		
 
 	}
