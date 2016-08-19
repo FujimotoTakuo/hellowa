@@ -21,12 +21,12 @@ public class ChieMain {
 	private static List<QABean> qaBeanList = new ArrayList<>();
 
 	public static void main(String[] args) throws IOException {
-		parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2079048294/list/solved",
-				"/home/wonusp/tensorflow/chat-master/datas/question_neko.txt",
-				"/home/wonusp/tensorflow/chat-master/datas/answer_neko.txt");
-		parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2079048294/list/solved",
-				"/home/wonusp/tensorflow/chat-master/datas/question_neko.txt",
-				"/home/wonusp/tensorflow/chat-master/datas/answer_neko.txt");
+		parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2078297658/list/solved",
+				"/home/wonusp/tensorflow/chat-master/datas/question_java.txt",
+				"/home/wonusp/tensorflow/chat-master/datas/answer_java.txt");
+		//parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2079048294/list/solved",
+		//		"/home/wonusp/tensorflow/chat-master/datas/question_neko.txt",
+		//		"/home/wonusp/tensorflow/chat-master/datas/answer_neko.txt");
 		// String topPageUrl =
 		// "http://chiebukuro.yahoo.co.jp/dir/list.php?did=2079048294&flg=1&sort=16&type=list&page=31";
 
@@ -85,7 +85,7 @@ public class ChieMain {
 			// System.out.println();
 		}
 
-		if (120 < Integer.parseInt(currentPage)) {
+		if (100 < Integer.parseInt(currentPage)) {
 			return;
 		}
 		System.out.println();
