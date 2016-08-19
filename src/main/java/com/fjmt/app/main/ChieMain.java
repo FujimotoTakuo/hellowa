@@ -22,8 +22,8 @@ public class ChieMain {
 
 	public static void main(String[] args) throws IOException {
 		parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2078297658/list/solved",
-				"/home/wonusp/tensorflow/chat-master/datas/question_java.txt",
-				"/home/wonusp/tensorflow/chat-master/datas/answer_java.txt");
+				"~/tensorflow/chat-master/datas/question_java.txt",
+				"~/tensorflow/chat-master/datas/answer_java.txt");
 		//parseDocument("http://chiebukuro.yahoo.co.jp/dir/list/d2079048294/list/solved",
 		//		"/home/wonusp/tensorflow/chat-master/datas/question_neko.txt",
 		//		"/home/wonusp/tensorflow/chat-master/datas/answer_neko.txt");
