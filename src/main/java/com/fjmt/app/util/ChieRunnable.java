@@ -53,6 +53,8 @@ public class ChieRunnable implements Runnable {
 			aFile = new File(outFileName);
 			bw2 = new BufferedWriter(new FileWriter(aFile));
 			searchQuestion(topPageUrl);
+
+			System.out.println("\n" + catName + " Done.");
 		} finally {
 			// 結果確認用
 			for (QABean bean : qaBeanList) {
