@@ -6,10 +6,13 @@ import java.net.SocketTimeoutException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import com.fjmt.app.main.Main;
+
 public class JSoupUtil {
 
 
 	public static Document getDocument(String url) {
+
 		for (int i = 0; i < 100; i++) {
 
 			try {
