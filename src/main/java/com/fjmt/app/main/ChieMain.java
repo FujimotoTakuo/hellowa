@@ -63,7 +63,7 @@ public class ChieMain {
 //			
 //			}
 //		};
-		int counter = 0;
+		int counter = 1;
 		for (Map.Entry<String, String> entry : chieMap.entrySet()) {
 			if (counter % 20 == 0) {
 				try {
