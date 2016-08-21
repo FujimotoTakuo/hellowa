@@ -19,12 +19,14 @@ import com.fjmt.app.bean.QABean;
 public class ChieRunnable implements Runnable {
 	
 	private String topPageUrl;
+	private String catName;
 	private String inFileName;
 	private String outFileName;
 	private List<QABean> qaBeanList = new ArrayList<>();
 
-	public ChieRunnable(String topPageUrl, String inFileName, String outFileName) {
+	public ChieRunnable(String topPageUrl, String catName, String inFileName, String outFileName) {
 		this.topPageUrl = topPageUrl;
+		this.catName = catName;
 		this.inFileName = inFileName;
 		this.outFileName = outFileName;
 	}
@@ -80,7 +82,7 @@ public class ChieRunnable implements Runnable {
 		}
 		Elements cullentPageSpan = nextPageDiv.select("p > span");
 		String currentPage = cullentPageSpan.get(0).text();
-		System.out.println("currentPage : " + currentPage + " / question loading start");
+		System.out.println("catName : " + catName + " / currentPage : " + currentPage + " / question loading start");
 
 		// qalst ultag
 		Elements elements = document.select("#qalst");
@@ -151,7 +153,7 @@ public class ChieRunnable implements Runnable {
 				return document;
 			} catch (SocketTimeoutException e) {
 				// TODO Auto-generated catch block
-				System.out.println("timeout ");
+				System.out.println("catName : " + catName + " / timeout ");
 			} catch (HttpStatusException e) {
 				throw new ClassNotFoundException();
 			} catch (IOException e) {

@@ -63,12 +63,24 @@ public class ChieMain {
 //			
 //			}
 //		};
+		int counter = 0;
 		for (Map.Entry<String, String> entry : chieMap.entrySet()) {
+			if (counter % 20 == 0) {
+				try {
+					Thread.sleep(60000);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+			}
 			ChieRunnable runner = new ChieRunnable(entry.getValue(),
+					entry.getKey(),
 					"/tmp/question_" + entry.getKey() + ".txt",
 					"/tmp/answer_" + entry.getKey() + ".txt");
 			Thread th = new Thread(runner);
 			th.start();
+			counter++;
+			
 		}
 		
 
