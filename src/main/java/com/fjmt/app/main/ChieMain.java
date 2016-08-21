@@ -24,7 +24,7 @@ public class ChieMain {
 		for (Element elem : elems) {
 			Elements aTags = elem.select("a");
 			for (Element aTag : aTags) {
-				String linkUrl = aTag.attr("href");
+				String linkUrl = aTag.attr("href") + "/list/solved";
 				String name = aTag.text();
 				System.out.println(name + " : " + linkUrl);
 				chieMap.put(name, linkUrl);
