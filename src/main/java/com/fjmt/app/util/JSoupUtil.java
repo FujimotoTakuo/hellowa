@@ -1,12 +1,11 @@
 package com.fjmt.app.util;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
-import com.fjmt.app.main.Main;
 
 public class JSoupUtil {
 
@@ -21,6 +20,9 @@ public class JSoupUtil {
 			} catch (SocketTimeoutException e) {
 				// TODO Auto-generated catch block
 				System.out.println("timeout ");
+			} catch (ConnectException e) {
+				// TODO Auto-generated catch block
+				System.out.println("localPort tarinai ");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
