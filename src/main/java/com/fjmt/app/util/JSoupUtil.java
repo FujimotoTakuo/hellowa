@@ -19,8 +19,9 @@ public class JSoupUtil {
 				return document;
 			} catch (SocketTimeoutException e) {
 				// TODO Auto-generated catch block
-				System.out.println("timeout ");
+//				System.out.println("timeout ");
 			} catch (ConnectException e) {
+				e.printStackTrace();
 				// TODO Auto-generated catch block
 				System.out.println("localPort tarinai ");
 			} catch (IOException e) {
@@ -29,7 +30,8 @@ public class JSoupUtil {
 				throw new RuntimeException(e);
 			}
 			try {
-				Thread.sleep(3000);
+				// 10s wait
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

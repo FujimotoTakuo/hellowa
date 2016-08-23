@@ -17,7 +17,7 @@ import org.jsoup.select.Elements;
 import com.fjmt.app.bean.QABean;
 
 public class ChieRunnable implements Runnable {
-	
+
 	private String topPageUrl;
 	private String catName;
 	private String inFileName;
@@ -30,13 +30,13 @@ public class ChieRunnable implements Runnable {
 		this.inFileName = inFileName;
 		this.outFileName = outFileName;
 	}
-	
+
 	@Override
 	public void run() {
 		// TODO 自動生成されたメソッド・スタブ
 		try {
 			parseDocument(topPageUrl, inFileName, outFileName);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
@@ -54,8 +54,10 @@ public class ChieRunnable implements Runnable {
 			bw2 = new BufferedWriter(new FileWriter(aFile));
 			searchQuestion(topPageUrl);
 
-			System.out.println("\n" + catName + " Done.");
 		} finally {
+			System.out.println("\n" + "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			System.out.println(catName + " Done. " + qaBeanList.size());
+			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			// 結果確認用
 			for (QABean bean : qaBeanList) {
 				bw1.write(bean.getQuestion());
@@ -74,12 +76,12 @@ public class ChieRunnable implements Runnable {
 		try {
 			document = getDocument(topPageUrl);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 			return;
 		}
 
 		Elements nextPageDiv = document.select("#yschpg");
-		if (nextPageDiv == null || nextPageDiv.select("p > span") == null || nextPageDiv.select("p > span").size() < 1) {
+		if (nextPageDiv == null || nextPageDiv.select("p > span") == null
+				|| nextPageDiv.select("p > span").size() < 1) {
 			return;
 		}
 		Elements cullentPageSpan = nextPageDiv.select("p > span");
@@ -95,7 +97,7 @@ public class ChieRunnable implements Runnable {
 			if (qaUrl.indexOf("http") == -1) {
 				continue;
 			}
-			System.out.print(".");
+//			System.out.print(".");
 			// System.out.println(qaUrl);
 			parseQuestion(qaUrl);
 			// System.out.println();
@@ -104,7 +106,7 @@ public class ChieRunnable implements Runnable {
 		if (120 < Integer.parseInt(currentPage)) {
 			return;
 		}
-		System.out.println();
+//		System.out.println();
 		Elements nextPageLink = document.select("#yschnxtb");
 		if (nextPageLink == null || nextPageLink.select("a") == null || nextPageLink.select("a").size() < 1) {
 			return;
@@ -148,30 +150,8 @@ public class ChieRunnable implements Runnable {
 	}
 
 	private Document getDocument(String url) throws ClassNotFoundException {
-		for (int i = 0; i < 100; i++) {
-
-			try {
-				Document document = Jsoup.connect(url).get();
-				return document;
-			} catch (SocketTimeoutException e) {
-				// TODO Auto-generated catch block
-				System.out.println("catName : " + catName + " / timeout ");
-			} catch (HttpStatusException e) {
-				throw new ClassNotFoundException();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
-		}
-		throw new RuntimeException("接続失敗");
+		Document document = JSoupUtil.getDocument(url);
+		return document;
 	}
 
 	public String getTopPageUrl() {
@@ -198,5 +178,4 @@ public class ChieRunnable implements Runnable {
 		this.outFileName = outFileName;
 	}
 
-	
 }
