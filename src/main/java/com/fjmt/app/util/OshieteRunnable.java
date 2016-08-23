@@ -16,15 +16,16 @@ import org.jsoup.select.Elements;
 
 import com.fjmt.app.bean.QABean;
 
-public class ChieRunnable implements Runnable {
+public class OshieteRunnable implements Runnable {
 
 	private String topPageUrl;
 	private String catName;
 	private String inFileName;
 	private String outFileName;
 	private List<QABean> qaBeanList = new ArrayList<>();
+	private static String HOST = "http://oshiete.goo.ne.jp";
 
-	public ChieRunnable(String topPageUrl, String catName, String inFileName, String outFileName) {
+	public OshieteRunnable(String topPageUrl, String catName, String inFileName, String outFileName) {
 		this.topPageUrl = topPageUrl;
 		this.catName = catName;
 		this.inFileName = inFileName;
@@ -35,23 +36,23 @@ public class ChieRunnable implements Runnable {
 	public void run() {
 		// TODO 自動生成されたメソッド・スタブ
 		try {
-			parseDocument(topPageUrl, inFileName, outFileName);
+			parseDocument();
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 	}
 
-	public void parseDocument(String topPageUrl, String inFileName, String outFileName) throws IOException {
+	public void parseDocument() throws IOException {
 		File qFile = null;
 		BufferedWriter bw1 = null;
 		File aFile = null;
 		BufferedWriter bw2 = null;
 		try {
 			qFile = new File(inFileName);
-			bw1 = new BufferedWriter(new FileWriter(qFile));
+			bw1 = new BufferedWriter(new FileWriter(qFile, true));
 			aFile = new File(outFileName);
-			bw2 = new BufferedWriter(new FileWriter(aFile));
+			bw2 = new BufferedWriter(new FileWriter(aFile, true));
 			searchQuestion(topPageUrl);
 
 		} finally {
@@ -65,8 +66,12 @@ public class ChieRunnable implements Runnable {
 				bw2.write(bean.getAnswer());
 				bw2.newLine();
 			}
-			bw1.close();
-			bw2.close();
+			if (bw1 != null) {
+				bw1.close();
+			}
+			if (bw2 != null) {
+				bw2.close();
+			}
 		}
 	}
 
@@ -78,40 +83,48 @@ public class ChieRunnable implements Runnable {
 		} catch (ClassNotFoundException e) {
 			return;
 		}
-
-		Elements nextPageDiv = document.select("#yschpg");
-		if (nextPageDiv == null || nextPageDiv.select("p > span") == null
-				|| nextPageDiv.select("p > span").size() < 1) {
-			return;
-		}
-		Elements cullentPageSpan = nextPageDiv.select("p > span");
+		Elements cullentPageSpan = document.select(".cur");
 		String currentPage = cullentPageSpan.get(0).text();
 		System.out.println("catName : " + catName + " / currentPage : " + currentPage + " / question loading start");
 
-		// qalst ultag
-		Elements elements = document.select("#qalst");
 		// a tag を持ってくる これが、質問へのリンク
-		Elements aTags = elements.select("a");
+		Elements aTags = document.select(".result h2.level > a");
+		// a tag を持ってくる これが、質問へのリンク
+		// Elements aTags = elements.select("a");
+		int counter = 1;
 		for (Element aTag : aTags) {
 			String qaUrl = aTag.attr("href");
-			if (qaUrl.indexOf("http") == -1) {
-				continue;
+
+			if (qaUrl.indexOf("//oshiete.goo.ne.jp") != -1) {
+				qaUrl = HOST + qaUrl.replace("//oshiete.goo.ne.jp", "");
 			}
-//			System.out.print(".");
-			// System.out.println(qaUrl);
+			// System.out.print(".");
+			System.out.println(aTag.text());
+			System.out.println(qaUrl);
 			parseQuestion(qaUrl);
-			// System.out.println();
+			System.out.println();
+			counter++;
+			if (counter > 3) {
+				break;
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
 		}
 
 		if (0 < Integer.parseInt(currentPage)) {
 			return;
 		}
-//		System.out.println();
-		Elements nextPageLink = document.select("#yschnxtb");
-		if (nextPageLink == null || nextPageLink.select("a") == null || nextPageLink.select("a").size() < 1) {
+		// System.out.println();
+		Elements nextPageLink = document.select("#paging > a");
+		if (nextPageLink == null || nextPageLink.size() == 0 || nextPageLink.get(0) == null
+				|| nextPageLink.get(0).attr("href") == null) {
 			return;
 		}
-		String url = nextPageLink.select("a").get(0).attr("href");
+		String url = nextPageLink.get(0).attr("href");
 		// System.out.println("nextPage : " + url);
 		searchQuestion(url);
 	}
@@ -124,27 +137,22 @@ public class ChieRunnable implements Runnable {
 			// とりあえず、
 			return;
 		}
-		Elements elements = document.select(".ptsQes");
-		if (elements.size() < 2) {
-			// System.out.println("回答なし");
-			return;
-		}
 		QABean bean = new QABean();
-		Element quesElement = elements.get(0);
-		Element ansElement = elements.get(1);
 		// 質問側
-		Elements quesPElem = quesElement.select("p");
-		String title = quesPElem.get(0).text();
-		Elements textElems = quesPElem.select(".queTxt");
-		String mainQues = textElems != null ? textElems.text() : "";
+		Elements quesPElem = document.select(".q_text");
+		String mainQues = quesPElem.get(0).text();
 
 		// 回答側
-		Elements ansTextElems = ansElement.select(".queTxt");
-		String mainAns = ansTextElems.text();
+		Elements ansTextElems = document.select("div.a_text");
+		if (ansTextElems == null || ansTextElems.size() == 0) {
+			// 解凍なし
+			return;
+		}
+		String mainAns = ansTextElems.get(0).text();
 
-		// System.out.println("Question : " + title + mainQues);
+		// System.out.println("Question : " + mainQues);
 		// System.out.println("Answer : " + mainAns);
-		bean.setQuestion(title + mainQues);
+		bean.setQuestion(mainQues);
 		bean.setAnswer(mainAns);
 		qaBeanList.add(bean);
 	}

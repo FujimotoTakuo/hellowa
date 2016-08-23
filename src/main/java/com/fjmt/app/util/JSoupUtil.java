@@ -12,7 +12,7 @@ public class JSoupUtil {
 
 	public static Document getDocument(String url) {
 
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 
 			try {
 				Document document = Jsoup.connect(url).get();
