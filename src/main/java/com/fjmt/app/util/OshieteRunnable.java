@@ -52,6 +52,8 @@ public class OshieteRunnable implements Runnable {
 			bw2 = new BufferedWriter(new FileWriter(aFile, true));
 			searchQuestion(topPageUrl);
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			System.out.println("\n" + "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			System.out.println(catName + " Done. " + qaBeanList.size());
@@ -70,6 +72,7 @@ public class OshieteRunnable implements Runnable {
 				bw2.close();
 			}
 		}
+
 	}
 
 	private void searchQuestion(String topPageUrl) throws IOException {
@@ -80,30 +83,30 @@ public class OshieteRunnable implements Runnable {
 		} catch (ClassNotFoundException e) {
 			return;
 		}
-		Elements cullentPageSpan = document.select(".cur");
+		Elements cullentPageSpan = document.select("div#paging > span.cur");
 		String currentPage = cullentPageSpan.get(0).text();
-		System.out.println("catName : " + catName + " / currentPage : " + currentPage + " / question loading start");
+		System.out.print("catName : " + catName + " / currentPage : " + currentPage + " / question loading start");
 
 		// a tag を持ってくる これが、質問へのリンク
 		Elements aTags = document.select(".result h2.level > a");
 		// a tag を持ってくる これが、質問へのリンク
 		// Elements aTags = elements.select("a");
-//		int counter = 1;
+		 int counter = 1;
 		for (Element aTag : aTags) {
 			String qaUrl = aTag.attr("href");
 
 			if (qaUrl.indexOf("//oshiete.goo.ne.jp") != -1) {
 				qaUrl = HOST + qaUrl.replace("//oshiete.goo.ne.jp", "");
 			}
-			 System.out.print(".");
-//			System.out.println(aTag.text());
-//			System.out.println(qaUrl);
+			System.out.print(".");
+			// System.out.println(aTag.text());
+			// System.out.println(qaUrl);
 			parseQuestion(qaUrl);
-//			System.out.println();
-//			counter++;
-//			if (counter > 3) {
-//				break;
-//			}
+			// System.out.println();
+			 counter++;
+//			 if (counter > 1) {
+//			 break;
+//			 }
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -111,8 +114,8 @@ public class OshieteRunnable implements Runnable {
 				e.printStackTrace();
 			}
 		}
-
-		if (0 < Integer.parseInt(currentPage)) {
+		System.out.println();
+		if (40 < Integer.parseInt(currentPage)) {
 			return;
 		}
 		// System.out.println();
@@ -121,7 +124,13 @@ public class OshieteRunnable implements Runnable {
 				|| nextPageLink.get(0).attr("href") == null) {
 			return;
 		}
-		String url = nextPageLink.get(0).attr("href");
+		// 最後のリンク
+		Element atag = nextPageLink.get(nextPageLink.size()-1);
+		if (atag.text().indexOf("次") == -1) {
+			// 最後のページ
+			return;
+		}
+		String url = nextPageLink.get(nextPageLink.size()-1).attr("href");
 		// System.out.println("nextPage : " + url);
 		searchQuestion(url);
 	}

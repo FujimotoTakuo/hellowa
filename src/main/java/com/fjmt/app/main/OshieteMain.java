@@ -40,8 +40,8 @@ public class OshieteMain {
 			OshieteRunnable runner = new OshieteRunnable(entry.getValue(), entry.getKey(),
 					"/home/dev10635gce001/chieatume/question_" + entry.getKey() + ".txt",
 					"/home/dev10635gce001/chieatume/answer_" + entry.getKey() + ".txt");
-			// "chieatume/question_" + entry.getKey() + ".txt",
-			// "chieatume/answer_" + entry.getKey() + ".txt");
+//			 "chieatume/question_" + entry.getKey() + ".txt",
+//			 "chieatume/answer_" + entry.getKey() + ".txt");
 			try {
 				runner.parseDocument();
 			} catch (RuntimeException e) {
@@ -54,7 +54,13 @@ public class OshieteMain {
 				System.out.println();
 			}
 			counter++;
-			// break;
+			try {
+				Thread.sleep(60000);
+			} catch (InterruptedException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+//			break;
 		}
 	}
 
