@@ -38,11 +38,10 @@ public class OshieteMain {
 		int counter = 1;
 		for (Map.Entry<String, String> entry : chieMap.entrySet()) {
 			OshieteRunnable runner = new OshieteRunnable(entry.getValue(), entry.getKey(),
-					// "/home/dev10635gce004/chieatume/question_" +
-					// entry.getKey() + ".txt",
-					// "/home/dev10635gce004/chieatume/answer_" + entry.getKey()
-					// + ".txt");
-					"chieatume/question_" + entry.getKey() + ".txt", "chieatume/answer_" + entry.getKey() + ".txt");
+					"/home/dev10635gce001/chieatume/question_" + entry.getKey() + ".txt",
+					"/home/dev10635gce001/chieatume/answer_" + entry.getKey() + ".txt");
+			// "chieatume/question_" + entry.getKey() + ".txt",
+			// "chieatume/answer_" + entry.getKey() + ".txt");
 			try {
 				runner.parseDocument();
 			} catch (RuntimeException e) {
