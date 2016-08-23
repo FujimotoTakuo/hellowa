@@ -4,12 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.HttpStatusException;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -91,22 +88,22 @@ public class OshieteRunnable implements Runnable {
 		Elements aTags = document.select(".result h2.level > a");
 		// a tag を持ってくる これが、質問へのリンク
 		// Elements aTags = elements.select("a");
-		int counter = 1;
+//		int counter = 1;
 		for (Element aTag : aTags) {
 			String qaUrl = aTag.attr("href");
 
 			if (qaUrl.indexOf("//oshiete.goo.ne.jp") != -1) {
 				qaUrl = HOST + qaUrl.replace("//oshiete.goo.ne.jp", "");
 			}
-			// System.out.print(".");
-			System.out.println(aTag.text());
-			System.out.println(qaUrl);
+			 System.out.print(".");
+//			System.out.println(aTag.text());
+//			System.out.println(qaUrl);
 			parseQuestion(qaUrl);
-			System.out.println();
-			counter++;
-			if (counter > 3) {
-				break;
-			}
+//			System.out.println();
+//			counter++;
+//			if (counter > 3) {
+//				break;
+//			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
