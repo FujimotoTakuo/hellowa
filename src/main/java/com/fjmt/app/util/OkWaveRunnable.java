@@ -111,7 +111,7 @@ public class OkWaveRunnable implements Runnable {
 			}
 		}
 		System.out.println();
-		if (3 < Integer.parseInt(currentPage)) {
+		if (40 < Integer.parseInt(currentPage)) {
 			return;
 		}
 		// System.out.println();
