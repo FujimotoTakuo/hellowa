@@ -47,6 +47,10 @@ public class OkWaveRunnable implements Runnable {
 		BufferedWriter bw2 = null;
 		try {
 			qFile = new File(inFileName);
+			// TODO 暫定
+			if (qFile.exists()) {
+				return;
+			}
 			bw1 = new BufferedWriter(new FileWriter(qFile, true));
 			aFile = new File(outFileName);
 			bw2 = new BufferedWriter(new FileWriter(aFile, true));
