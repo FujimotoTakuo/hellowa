@@ -54,12 +54,12 @@ public class OshieteMain {
 				System.out.println();
 			}
 			counter++;
-			try {
-				Thread.sleep(60000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(60000);
+//			} catch (InterruptedException e) {
+//				// TODO 自動生成された catch ブロック
+//				e.printStackTrace();
+//			}
 //			break;
 		}
 	}
