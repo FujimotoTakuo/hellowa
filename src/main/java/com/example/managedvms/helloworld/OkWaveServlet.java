@@ -26,16 +26,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.fjmt.app.main.*;
 
 // [START example]
-@WebServlet(name = "ok", value = "/ok")
+@WebServlet(name = "oshiete", value = "/oshiete")
 @SuppressWarnings("serial")
-public class OshieteServlet extends HttpServlet {
+public class OkWaveServlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		PrintWriter out = resp.getWriter();
 		out.println("Hello, world");
 		try {
-			OkWaveMain.main(new String[] {});
+			OshieteMain.main(new String[] {});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
